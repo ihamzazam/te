@@ -41,23 +41,40 @@ jobs:
         run: npx hardhat test
 
       - name: Deploy contract
+        id: deploy_contract
         run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          
+      - name: Save proxy address
+        run: |
+          NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/^0x\([0-9a-fA-F]\+\)$/\1/p')
+          
+          echo "::set-output name=proxy_address::$NEW_PROXY_ADDRESS"
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: proxy-address
+          path: ${{ github.workspace }}/proxy-address.txt
+          
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: proxy-address
           
       - name: Set proxy address
         run: |
-          NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/^0x\([0-9a-fA-F]\+\)$/\1/p')
-          echo NEW_PROXY_ADDRESS
+          NEW_PROXY_ADDRESS=$(cat proxy-address.txt)
           
           cd scripts
-
           sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" upgrade.js
           
           git config --global user.email "hamzazam00@gmail.com"
           git config --global user.name "Hamza"
           
-          git add .
+          git add upgrade.js
           git commit -m "Update proxy address"
           git push 
         env:
           MY_GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-
