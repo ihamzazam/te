@@ -45,10 +45,10 @@ jobs:
           
       - name: Set proxy address
         run: |
-          OUTPUT=$(npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }})
+          OUTPUT=$(npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }} | grep 'Proxy address:')
+          NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/Proxy address: \(.*\)/\1/p')
           
           cd scripts
-
           sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" upgrade.js
           
           git config --global user.email "hamzazam00@gmail.com"
@@ -56,7 +56,7 @@ jobs:
           
           git add upgrade.js
           git commit -m "Update proxy address"
-          git push 
+          git push
         env:
           MY_GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
 
