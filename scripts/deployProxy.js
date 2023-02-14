@@ -5,7 +5,7 @@ async function main() {
   const proxy = await upgrades.deployProxy(BoxV1, [12, 12]);
   await proxy.deployed();
 
-  console.log('proxy address: ' proxy.address);
+  console.log('proxy address: ' + proxy.address);
 }
 
 main();
