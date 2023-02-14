@@ -46,11 +46,12 @@ jobs:
       - name: Set proxy address
         run: |
         
-          OUTPUT=$(npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }} | jq -r '.address')
-          echo "New proxy address: $OUTPUT"
-    
-          cd scripts
+          OUTPUT=$(npx hardhat run scripts/deployProxy.js --network volta | tail -n 1)
+          
+          cd scripts/
+
           sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$OUTPUT\";/g" upgrade.js
+
     
           git config --global user.email "hamzazam00@gmail.com"
           git config --global user.name "Hamza"
