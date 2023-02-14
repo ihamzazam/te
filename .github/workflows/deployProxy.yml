@@ -49,6 +49,9 @@ jobs:
           cd scripts
 
           sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" upgrade.js
+            
+          git config --global user.email "hamzazam00@gmail.com"
+          git config --global user.name "Hamza"
 
           git add upgrade.js
           git commit -m "Update proxy address"
