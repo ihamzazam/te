@@ -45,7 +45,7 @@ jobs:
         
       - name: Extract proxy address
         run: |
-          PROXY_ADDRESS=$(npx hardhat run scripts/deployProxy.js --network volta | grep 'proxy address' | cut -d ' ' -f 3)
+          PROXY_ADDRESS=$(npx hardhat run scripts/deployProxy.js --network volta | grep 'proxy address: ')
           echo "$PROXY_ADDRESS" > scripts/proxy_address.txt
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
