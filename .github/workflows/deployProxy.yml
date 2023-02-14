@@ -45,7 +45,7 @@ jobs:
 
           new_proxyAddress=$(echo $PIPELINE_OUTPUT | grep -oEi "0x[[:xdigit:]]+")
           
-          sed -i "s/proxyAddress/$new_proxyAddress/g" upgrade.js
+          sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$new_proxyAddress\";/g" upgrade.js
           
           git add upgrade.js
           git commit -m "Update proxy address"
