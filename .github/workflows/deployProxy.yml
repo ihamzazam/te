@@ -40,13 +40,13 @@ jobs:
         run: npx hardhat test
 
       - name: Deploy contract
-        run: |
-          npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
+        run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
 
-          new_proxyAddress=$(echo $PIPELINE_OUTPUT | grep -oEi "0x[[:xdigit:]]+")
-          
-          sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$new_proxyAddress\";/g" upgrade.js
-          
+      - name: Set proxy address
+          NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/^0x\([0-9a-fA-F]\+\)$/\1/p')
+
+          sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" upgrade.js
+
           git add upgrade.js
           git commit -m "Update proxy address"
           git push 
