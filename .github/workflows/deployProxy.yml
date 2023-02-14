@@ -56,4 +56,6 @@ jobs:
           git add upgrade.js
           git commit -m "Update proxy address"
           git push 
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GH_TOKEN }}
 
