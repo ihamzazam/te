@@ -45,8 +45,10 @@ jobs:
       - name: Set proxy address
         run: |
           NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/^0x\([0-9a-fA-F]\+\)$/\1/p')
+          
+          cd scripts
 
-          sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" scripts/upgrade.js
+          sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" upgrade.js
 
           git add upgrade.js
           git commit -m "Update proxy address"
