@@ -13,6 +13,7 @@ on:
     
 env:
   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  GITHUB_TOKEN: ${{ secrets.MY_GH_TOKEN }}
 
 jobs:
   deploy:
@@ -21,6 +22,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.SSH }}
         
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -43,6 +46,7 @@ jobs:
         run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
 
       - name: Set proxy address
+      
         run: |
           NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/^0x\([0-9a-fA-F]\+\)$/\1/p')
           
@@ -56,6 +60,5 @@ jobs:
           git add upgrade.js
           git commit -m "Update proxy address"
           git push git@github.com:ihamzazam/te.git HEAD:main
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+          
 
