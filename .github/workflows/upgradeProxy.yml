@@ -1,4 +1,4 @@
-name: Proxy
+name: upgradeProxy
 
 on: 
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
           - ewc
           required: true
           default: volta
-          
+    
 env:
   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
@@ -25,9 +25,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node:version: current
           
-      - name: Install dependencies 
+      - name: Install depndencies 
         run: npm ci
         
       - name: Installing hardhat
@@ -40,13 +40,4 @@ jobs:
         run: npx hardhat test
 
       - name: Deploy contract
-        run: |
-          npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
-          
-          new_proxyAddress=$(echo $PIPELINE_OUTPUT | grep -oEi "0x[[:xdigit:]]+")
-          
-          sed -i "s/proxyAddress/$new_proxyAddress/g" upgrade.js
-          
-          git add upgrade.js
-          git commit -m "Update proxy address"
-          git push origin upgrade
+        run: npx hardhat run scripts/upgrade.js --network ${{ inputs.network }}
