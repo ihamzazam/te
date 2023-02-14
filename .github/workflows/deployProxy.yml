@@ -43,6 +43,7 @@ jobs:
         run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
 
       - name: Set proxy address
+        rub: |
           NEW_PROXY_ADDRESS=$(echo "$OUTPUT" | sed -n 's/^0x\([0-9a-fA-F]\+\)$/\1/p')
 
           sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$NEW_PROXY_ADDRESS\";/g" upgrade.js
