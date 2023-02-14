@@ -57,9 +57,7 @@ jobs:
           
           git add upgrade.js
           git commit -m "Update proxy address"
-          git push https://github.com/ihamzazam/te.git
-          Username: Hamza
-          Password: GITHUB_TOKEN
+          git push https://GITHUB_TOKEN@github.com/ihamzazam/te.git
           
           
 
