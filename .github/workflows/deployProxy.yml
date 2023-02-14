@@ -22,8 +22,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+          
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.5.0
         with:
-          ssh-key: ${{ secrets.SSH1 }}
+          ssh-private-key: ${{ secrets.SSH }}
+
         
       - name: Setup Node.js
         uses: actions/setup-node@v2
