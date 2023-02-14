@@ -46,7 +46,7 @@ jobs:
       - name: Set proxy address
         run: |
         
-          OUTPUT=$(npx hardhat run scripts/deployProxy.js --network volta | tail -n 1)
+          OUTPUT=$(npx hardhat run scripts/deployProxy.js --network volta | tail -n 2)
           
           cd scripts/
 
