@@ -62,7 +62,7 @@ jobs:
           git config --global user.email "hamzazam00@gmail.com"
           git config --global user.name "Hamza"
     
-          git add upgrade.js
+          git add upgrade.jsproxy_address.txt
           git commit -m "Update proxy address"
           git push
         env:
