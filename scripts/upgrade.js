@@ -1,7 +1,7 @@
 const { ethers, upgrades } = require("hardhat");
 
 // TO DO: Place the address of your proxy here!
-const proxyAddress = "0xC92779167C20Ac67Ee4d41B6613cc0d79Aa5d85e";
+const proxyAddress = "0x9342e7C1AF71216D4822F8ef8fc5427CE82824f6";
 
 async function main() {
   const BoxV2 = await ethers.getContractFactory("BoxV2");
