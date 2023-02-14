@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with: 
+          token: GITHUB_TOKEN
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -57,7 +59,7 @@ jobs:
           
           git add upgrade.js
           git commit -m "Update proxy address"
-          git push https://GITHUB_TOKEN@github.com/ihamzazam/te.git
+          git push 
           
           
 
