@@ -40,4 +40,13 @@ jobs:
         run: npx hardhat test
 
       - name: Deploy contract
-        run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
+        run: |
+          npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
+          
+          new_proxyAddress=$(echo $PIPELINE_OUTPUT | grep -oEi "0x[[:xdigit:]]+")
+          
+          sed -i "s/proxyAddress/$new_proxyAddress/g" upgrade.js
+          
+          git add upgrade.js
+          git commit -m "Update proxy address"
+          git push
