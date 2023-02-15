@@ -42,23 +42,14 @@ jobs:
 
       - name: Deploy contract
         run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
-        
-      - name: Extract proxy address
-        run: |
-          PROXY_ADDRESS=$(npx hardhat run scripts/deployProxy.js --network volta | grep 'proxy address: ' | awk '{print $3}')
-          echo "$PROXY_ADDRESS" > scripts/proxy_address.txt
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           
       - name: Set proxy address
         run: |
-          
           cd scripts/
           
           PROXY_ADDRESS=$(cat proxy_address.txt)
           sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$PROXY_ADDRESS\";/g" upgrade.js
 
-    
           git config --global user.email "hamzazam00@gmail.com"
           git config --global user.name "Hamza"
     
