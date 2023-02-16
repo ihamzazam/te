@@ -42,7 +42,7 @@ jobs:
 
       - name: Deploy contract
         run: |
-          PROXY_ADDRESS=$(npx hardhat run scripts/deployProxy.js --network $NETWORK | grep 'proxy address: ' | cut -d ' ' -f 3)
+          PROXY_ADDRESS=$(npx hardhat run scripts/deployProxy.js --network inputs.network | grep 'proxy address: ' | cut -d ' ' -f 3)
           echo "PROXY_ADDRESS=$PROXY_ADDRESS" >> $GITHUB_ENV
           echo "Proxy contract deployed at address $PROXY_ADDRESS"
         env:
