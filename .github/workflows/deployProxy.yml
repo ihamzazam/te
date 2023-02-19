@@ -50,5 +50,5 @@ jobs:
           curl -X PUT \
           -H "Authorization: Bearer ${{ secrets.MY_GH_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/ihamzazam/te/actions/secrets/proxy_add" \
-          -d "{\"encrypted_value\":\"$(echo -n "$PROXY_ADDRESS" | base64)\"}"
+          "https://api.github.com/repos/ihamzazam/te/actions/secrets/PROXY_ADR" \
+          -d '{"encrypted_value":"","value":"<YOUR_HEX_VALUE>"}'
