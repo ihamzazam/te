@@ -1,20 +1,18 @@
-// SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract BoxV1 is Initializable {
-  // these state variables and their values
-  // will be preserved forever, regardless of upgrading
-  uint public width;
-  uint public length;
-
-  function initialize(uint _length, uint _width) public initializer {
-    length = _length;
-    width = _width;
-  }
-  
-  function area() public view returns(uint) {
-    return length * width;
-  }
+contract BoxV1 { 
+    uint256 private value;
+    // Emitted when the stored value changes
+    event ValueChanged( uint256 newValue);
+    // Stores a new value in the contract
+    function store(uint256 newValue ) public {
+    value = newValue;
+    emit ValueChanged(newValue);
+    }
+    // Reads the last stored value
+    function retrieve( ) public view returns (uint256) {
+    return value;
+    }
 }
