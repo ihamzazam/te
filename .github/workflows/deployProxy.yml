@@ -1,0 +1,59 @@
+name: deployProxy
+
+on: 
+  workflow_dispatch:
+    inputs:      
+        network:
+          description: 'Enter the network to deploy to: EWC or Volta'
+          options:
+          - volta
+          - ewc
+          required: true
+          default: volta
+    
+env:
+  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  MY_GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node:version: current
+          
+      - name: Install depndencies 
+        run: npm ci
+        
+      - name: Installing hardhat
+        run: npm install -g hardhat
+        
+      - name: Compile contract
+        run: npx hardhat compile
+
+      - name: Test contract
+        run: npx hardhat test
+
+      - name: Deploy contract
+        run: npx hardhat run scripts/deployProxy.js --network ${{ inputs.network }}
+          
+     # - name: Set proxy address
+     #   run: |
+      #    cd scripts/
+          
+      #    PROXY_ADDRESS=$(cat proxy_address.txt)
+       #   sed -i "s/const proxyAddress = \".*\";/const proxyAddress = \"$PROXY_ADDRESS\";/g" upgrade.js
+       #   git config --global user.email "hamzazam00@gmail.com"
+        #  git config --global user.name "Hamza"
+    #
+       #   git add upgrade.js proxy_address.txt
+       #   git commit -m "Update proxy address"
+       #   git push
+      #  env:
+        #  MY_GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
