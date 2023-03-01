@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 
 import "./BoxV1.sol";
 
-contract BoxV2 is Box{
+contract BoxV2 is BoxV1{
     // Increment the stored value by 1
     function increment() public{
         store(retrieve()+1);
