@@ -2,8 +2,8 @@ const { ethers } = require("hardhat");
 const { upgrades } = require("hardhat");
 
 async function main() {
-      const boxAddress = "0xfE692947C38c16890561993b4898aE59a82bafCb"; // replace with the address of your Box contract
-      const Box = await ethers.getContractFactory("Box");
+      const boxAddress = "0xDb83A481a472A82543e338e44440D1b6A4E0ffD2"; // replace with the address of your Box contract
+      const Box = await ethers.getContractFactory("BoxV1");
       const box = await Box.attach(boxAddress);
     
       console.log("Deploying Box proxy...");
