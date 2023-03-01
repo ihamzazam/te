@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 async function main() {
   // Deploy Implementation Contract
-  const Box = await ethers.getContractFactory("Box");
+  const Box = await ethers.getContractFactory("BoxV1");
   const box = await Box.deploy();
   await box.deployed();
 
